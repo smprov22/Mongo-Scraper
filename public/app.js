@@ -33,9 +33,9 @@ $(document).on("click", ".article", function() {
       // A textarea to add a new note body
       $("#comments").append("<textarea id='bodyinput' name='body'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
-      $("#comments").append("<button data-id='" + data._id + "' id='savenote'>Save Comment</button>");
+      $("#comments").append("<button data-id='" + data._id + "' id='saveComment'>Save Comment</button>");
       // Add a delete button
-      $("comments").append("<button data-id='" + data._id + "' id='deletecomment'>Delete Comment</button>");
+      $("#comments").append("<button data-id='" + data.note._id + "' id='deleteComment'>Delete Comment</button>");
 
       // If there's a note in the article
       if (data.note) {
@@ -48,7 +48,7 @@ $(document).on("click", ".article", function() {
 });
 
 // When you click the savenote button
-$(document).on("click", "#savenote", function() {
+$(document).on("click", "#saveComment", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
 
@@ -75,3 +75,15 @@ $(document).on("click", "#savenote", function() {
   $("#titleinput").val("");
   $("#bodyinput").val("");
 });
+
+// $(document).on("click", "#deleteComment", function() {
+//   let id = $(this).attr('data-id')
+//   let url = '/comments/' + id
+//   $.ajax({
+//     method: 'DELETE',
+//     url: url,
+//     data: { id: id }
+//   }).then(function () {
+//     $("#comments").empty();
+//   })
+// })

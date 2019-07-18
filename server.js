@@ -118,7 +118,31 @@ app.post("/headlines/:id", function(req, res) {
     });
 });
 
-// Start the server
-app.listen(PORT, function() {
-  console.log("App running on port " + PORT + "!");
+// Route for grabbing a specific Comment by id
+app.get("/comments/:id", function(req, res) {
+  // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+  db.Comment.findOne({ _id: req.params.id })
+    // ..and populate all of the notes associated with it
+    .then(function(dbComment) {
+      // If we were able to successfully find an Article with the given id, send it back to the client
+      res.json(dbComment);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
 });
+
+// Route for deleting a comment on an article
+// app.post("/comments/:id", function(req, res) {
+//   db.Comment.findOne({ _id: req.params.id }, function(error, comment) {
+//     comment.remove(function(error){
+//       res.json(err);
+//     })
+//   })
+// })
+
+// // Start the server
+// app.listen(PORT, function() {
+//   console.log("App running on port " + PORT + "!");
+// });
