@@ -3,7 +3,7 @@ $.getJSON("/headlines", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    var newDiv = $("<div>").addClass("article").append("<h3>" + data[i].title + "<br />" + "</h3>").append("<p>" + "https://www.imdb.com" + data[i].link + "</p>" + "<hr>");
+    var newDiv = $("<div>").addClass("article").append("<h2>" + data[i].title + "<br />" + "</h2>").append("<p>" + data[i].summary  + "</p>").append("<p><i>" + data[i].author + "</i></p>" + "<br>").append("<p>" + "https://www.nytimes.com" + data[i].link + "</p>" + "<hr>");
     $(newDiv).attr("data-id", data[i]._id);
 
     $("#headlines").append(newDiv);  
@@ -35,14 +35,14 @@ $(document).on("click", ".article", function() {
       // A button to submit a new note, with the id of the article saved to it
       $("#comments").append("<button data-id='" + data._id + "' id='saveComment'>Save Comment</button>");
       // Add a delete button
-      $("#comments").append("<button data-id='" + data.note._id + "' id='deleteComment'>Delete Comment</button>");
+      $("#comments").append("<button data-id='" + data.comment._id + "' id='deleteComment'>Delete Comment</button>");
 
       // If there's a note in the article
-      if (data.note) {
+      if (data.comment) {
         // Place the title of the note in the title input
-        $("#titleinput").val(data.note.title);
-        // Place the body of the note in the body textarea
-        $("#bodyinput").val(data.note.body);
+        $("#titleinput").val(data.comment.title);
+        // Place the body of the notes in the body textarea
+        $("#bodyinput").val(data.comment.body);
       }
     });
 });
@@ -76,14 +76,14 @@ $(document).on("click", "#saveComment", function() {
   $("#bodyinput").val("");
 });
 
-// $(document).on("click", "#deleteComment", function() {
-//   let id = $(this).attr('data-id')
-//   let url = '/comments/' + id
-//   $.ajax({
-//     method: 'DELETE',
-//     url: url,
-//     data: { id: id }
-//   }).then(function () {
-//     $("#comments").empty();
-//   })
-// })
+$(document).on("click", "#deleteComment", function() {
+  let id = $(this).attr('data-id')
+  let url = '/comments/' + id
+  $.ajax({
+    method: 'DELETE',
+    url: url,
+    data: { id: id }
+  }).then(function () {
+    $("#comments").empty();
+  })
+})

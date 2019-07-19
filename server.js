@@ -34,22 +34,25 @@ mongoose.connect("mongodb://localhost/Mongo-scraper", { useNewUrlParser: true })
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("https://www.imdb.com/news/movie").then(function(response) {
+  axios.get("https://www.nytimes.com/section/movies").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
     // console.log(response.data)
 
     // Now, we grab every h2 within an article tag, and do the following:
-    $("article.news-article").each(function(i, element) {
+    $("li.css-ye6x8s").each(function(i, element) {
       // Save an empty result object
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this)
         .children().find("h2").text();
+      result.summary = $(this)
+        .children().find("p.css-1echdzn").text();
       result.link = $(this)
         .find("a").attr("href");
-      console.log(result);
+      result.author = $(this)
+        .children().find("p.css-1xonkmu").text();
 
       // Create a new Article using the `result` object built from scraping
       db.Headline.create(result)
@@ -87,7 +90,7 @@ app.get("/headlines/:id", function(req, res) {
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
   db.Headline.findOne({ _id: req.params.id })
     // ..and populate all of the notes associated with it
-    .populate("note")
+    .populate("comment")
     .then(function(dbHeadline) {
       // If we were able to successfully find an Article with the given id, send it back to the client
       res.json(dbHeadline);
@@ -106,7 +109,7 @@ app.post("/headlines/:id", function(req, res) {
       // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
       // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
       // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-      return db.Headline.findOneAndUpdate({ _id: req.params.id }, { note: dbComment._id }, { new: true });
+      return db.Headline.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
     })
     .then(function(dbHeadline) {
       // If we were able to successfully update an Article, send it back to the client
@@ -134,15 +137,19 @@ app.get("/comments/:id", function(req, res) {
 });
 
 // Route for deleting a comment on an article
-// app.post("/comments/:id", function(req, res) {
-//   db.Comment.findOne({ _id: req.params.id }, function(error, comment) {
-//     comment.remove(function(error){
-//       res.json(err);
-//     })
-//   })
-// })
+app.delete("/comments/:id", function(req, res) {
+  db.Comment.findOne({ _id: req.params.id })
+  .then(function(dbComment) {
+    dbComment.remove(function(err){
+      res.json(err);
+    })
+  })
+  .catch(function(err) {
+    res.json(err);
+  })
+})
 
-// // Start the server
-// app.listen(PORT, function() {
-//   console.log("App running on port " + PORT + "!");
-// });
+// Start the server
+app.listen(PORT, function() {
+  console.log("App running on port " + PORT + "!");
+});
