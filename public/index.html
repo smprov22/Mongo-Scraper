@@ -3,46 +3,14 @@
   <head>
     <meta charset="UTF-8">
     <title>Movie News Forum</title>
-    <style>
-      body { background-color: #F2F6D0 }
-      #wrapper {
-        width: 960px;
-        margin-left: auto;
-        margin-right: auto;
-        padding-top: 5%;
-      }
-      #headlines {
-        display: inline-block;
-        overflow: auto;
-        width: 60%;
-        height: 700px;
-      }
-      #comments {
-        float: right;
-        width: 30%;
-      }
-      textarea, input {
-        display: block;
-        width: 100%;
-        background-color: #FCF5C7;
-      }
-      input {
-        height: 36px;
-        font-size: 24px;
-      }
-      textarea {
-        height: 200px;
-        font-size: 18px;
-      }
-      p {
-        margin: 3px 0px;
-      }
-    </style>
+    <link rel="stylesheet" href="/style.css">
   </head>
   <body>
     <div id="wrapper">
-      <h1>Movie News</h1>
-      <h2><i>Click on an article to add your comments.</i></h2>
+      <div id="page-title">
+        <h1>NYT Movie News</h1>
+        <h2><i>Click on an article to add your comments.</i></h2>
+      </div>
       <div id="headlines"></div>
       <div id="comments"></div>
     </div>

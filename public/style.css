@@ -1,0 +1,65 @@
+body { 
+    background-image: url(images/Blue-movie-film-strip-backgrounds-1000x750.jpg);
+    background-size: cover; 
+}
+#wrapper {
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 5%;
+}
+
+h2 {
+    color: white;
+}
+
+#page-title {
+    border: 3px solid white;
+    color: white;
+    width: 60%;
+    text-align: center;
+    padding: 10px 0px;
+    margin-bottom: 20px;
+}
+
+#headlines {
+  display: inline-block;
+  overflow: auto;
+  width: 60%;
+  height: 700px;
+  color: white;
+}
+
+#comments {
+  float: right;
+  width: 30%;
+}
+
+textarea, input {
+  display: block;
+  width: 100%;
+  background-color: white;
+}
+
+input {
+  height: 36px;
+  font-size: 18px;
+}
+
+textarea {
+  height: 200px;
+  font-size: 16px;
+}
+
+p {
+  margin: 3px 0px;
+}
+
+button {
+    background: #1e4570;
+    color: white;
+    padding: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+    border: none;
+}
