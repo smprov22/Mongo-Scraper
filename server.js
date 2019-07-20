@@ -23,11 +23,6 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
-// Connect to the Mongo DB
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://user1:password1@ds353007.mlab.com:53007/heroku_2b9mxbsk";
-
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-
 // Routes
 
 // A GET route for scraping the NYT Movie News website
@@ -130,6 +125,11 @@ app.delete("/comments/:id", (req, res) => {
     res.json(err);
   })
 })
+
+// Connect to the Mongo DB
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/Mongo-scraper";
+
+mongoose.connect(MONGODB_URI);
 
 // Start the server
 app.listen(PORT, () => {
