@@ -1,9 +1,9 @@
 // Grab the articles as a json
-$.getJSON("/headlines", function(data) {
+$.getJSON("/headlines", data => {
   // For each one
-  for (var i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    var newDiv = $("<div>").addClass("article").append("<h2>" + data[i].title + "<br />" + "</h2>").append("<p>" + data[i].summary  + "</p>").append("<p><i>" + data[i].author + "</i></p>" + "<br>").append("<p>" + "https://www.nytimes.com" + data[i].link + "</p>" + "<hr>");
+    const newDiv = $("<div>").addClass("article").append("<h2>" + data[i].title + "<br />" + "</h2>").append("<p>" + data[i].summary  + "</p>").append("<p><i>" + data[i].author + "</i></p>" + "<br>").append("<p>" + "https://www.nytimes.com" + data[i].link + "</p>" + "<hr>");
     $(newDiv).attr("data-id", data[i]._id);
 
     $("#headlines").append(newDiv);  
@@ -16,7 +16,7 @@ $(document).on("click", ".article", function() {
   // Empty the notes from the note section
   $("#comments").empty();
   // Save the id from the p tag
-  var thisId = $(this).attr("data-id");
+  let thisId = $(this).attr("data-id");
 
   // Now make an ajax call for the Article
   $.ajax({
@@ -24,7 +24,7 @@ $(document).on("click", ".article", function() {
     url: "/headlines/" + thisId
   })
     // With that done, add the note information to the page
-    .then(function(data) {
+    .then((data) => {
       console.log(data);
       // The title of the article
       $("#comments").append("<h2>" + data.title + "</h2>");
@@ -50,7 +50,7 @@ $(document).on("click", ".article", function() {
 // When you click the savenote button
 $(document).on("click", "#saveComment", function() {
   // Grab the id associated with the article from the submit button
-  var thisId = $(this).attr("data-id");
+  let thisId = $(this).attr("data-id");
 
   // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
@@ -64,7 +64,7 @@ $(document).on("click", "#saveComment", function() {
     }
   })
     // With that done
-    .then(function(data) {
+    .then(data => {
       // Log the response
       // console.log(data);
       // Empty the notes section
@@ -83,7 +83,7 @@ $(document).on("click", "#deleteComment", function() {
     method: 'DELETE',
     url: url,
     data: { id: id }
-  }).then(function () {
+  }).then(() => {
     $("#comments").empty();
   })
 })

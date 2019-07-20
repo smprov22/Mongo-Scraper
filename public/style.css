@@ -1,6 +1,7 @@
 body { 
     background-image: url(images/Blue-movie-film-strip-backgrounds-1000x750.jpg);
     background-size: cover; 
+    font-family: 'Tajawal', sans-serif;
 }
 #wrapper {
   width: 960px;
@@ -11,6 +12,7 @@ body {
 
 h2 {
     color: white;
+    font-family: 'Play', sans-serif;
 }
 
 #page-title {
@@ -20,6 +22,7 @@ h2 {
     text-align: center;
     padding: 10px 0px;
     margin-bottom: 20px;
+    font-family: 'Play', sans-serif;
 }
 
 #headlines {
@@ -39,11 +42,13 @@ textarea, input {
   display: block;
   width: 100%;
   background-color: white;
+  font-family: 'Tajawal', sans-serif;
 }
 
 input {
   height: 36px;
-  font-size: 18px;
+  font-size: 20px;
+  margin-bottom: 5px;
 }
 
 textarea {
@@ -52,7 +57,7 @@ textarea {
 }
 
 p {
-  margin: 3px 0px;
+  margin: 2px 0px;
 }
 
 button {
@@ -61,5 +66,6 @@ button {
     padding: 10px;
     margin-top: 5px;
     margin-right: 5px;
-    border: none;
+    border: 1px solid white;
+    font-family: 'Tajawal', sans-serif;
 }
