@@ -7,8 +7,7 @@ const cheerio = require("cheerio");
 
 // Require all models
 const db = require("./models");
-
-const PORT = process.env.PORT || 8080;
+const PORT =  process.env.PORT || 8080;
 
 // Initialize Express
 const app = express();
@@ -26,15 +25,17 @@ app.use(express.static("public"));
 // Routes
 
 // A GET route for scraping the NYT Movie News website
-app.get("/scrape", (req, res) => {
-  axios.get("https://www.nytimes.com/section/movies").then((response) => {
+app.get("/scrape", function(req, res) {
+  axios.get("https://www.nytimes.com/section/movies").then(function(response) {
     var $ = cheerio.load(response.data);
+    // console.log(response.data);
 
-    $("li.css-ye6x8s").each((i, element) => {
+    $("li.css-ye6x8s").each(function(i, element) {
       var result = {};
 
       result.title = $(this)
         .children().find("h2").text();
+        console.log(result.title);
       result.summary = $(this)
         .children().find("p.css-1echdzn").text();
       result.link = $(this)
@@ -55,7 +56,7 @@ app.get("/scrape", (req, res) => {
     });
 
     // Send a message to the client
-    res.send("Scrape Complete");
+    res.send(index.html);
   });
 });
 
@@ -127,10 +128,12 @@ app.delete("/comments/:id", (req, res) => {
 })
 
 // Connect to the Mongo DB
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/Mongo-scraper";
+// const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/Mongo-scraper";
 
+// mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines"
 mongoose.connect(MONGODB_URI);
-
 // Start the server
 app.listen(PORT, () => {
   console.log("App running on port " + PORT + "!");
