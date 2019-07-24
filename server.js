@@ -48,15 +48,15 @@ app.get("/scrape", function(req, res) {
         .then(dbHeadline => {
           // View the added result in the console
           console.log(dbHeadline);
+          // res.render("index.html");
         })
         .catch(err => {
           // If an error occurred, log it
           console.log(err);
         });
     });
-
-    // Send a message to the client
-    res.render("index.html");
+    res.redirect("/")
+    
   });
 });
 
@@ -132,7 +132,7 @@ app.delete("/comments/:id", (req, res) => {
 
 // mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines"
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/Mongo-scraper"
 mongoose.connect(MONGODB_URI);
 // Start the server
 app.listen(PORT, () => {
